@@ -28,16 +28,23 @@ public class ClientService {
     }
 
     public void save(Client client) {
-        Client existing = findById(client.getId());
-        if (existing != null) {
-            existing.setNom(client.getNom());
-            existing.setPrenom(client.getPrenom());
-            existing.setEmail(client.getEmail());
-            existing.setPermis(client.getPermis());
-            existing.setGenre(client.getGenre());
-            existing.setBloque(client.isBloque());
-        } else {
+        if (client.getId() == 0) {
+            int newId = clients.stream()
+                    .mapToInt(Client::getId)
+                    .max()
+                    .orElse(0) + 1;
+            client.setId(newId);
             clients.add(client);
+        } else {
+            Client existing = findById(client.getId());
+            if (existing != null) {
+                existing.setNom(client.getNom());
+                existing.setPrenom(client.getPrenom());
+                existing.setEmail(client.getEmail());
+                existing.setPermis(client.getPermis());
+                existing.setGenre(client.getGenre());
+                existing.setBloque(client.isBloque());
+            }
         }
     }
 

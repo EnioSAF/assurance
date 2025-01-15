@@ -28,14 +28,21 @@ public class ContratService {
     }
 
     public void save(Contrat contrat) {
-        Contrat existing = findById(contrat.getId());
-        if (existing != null) {
-            existing.setDateDebut(contrat.getDateDebut());
-            existing.setDateFin(contrat.getDateFin());
-            existing.setPrixTotal(contrat.getPrixTotal());
-            existing.setEtat(contrat.getEtat());
-        } else {
+        if (contrat.getId() == 0) {
+            int newId = contrats.stream()
+                    .mapToInt(Contrat::getId)
+                    .max()
+                    .orElse(0) + 1;
+            contrat.setId(newId);
             contrats.add(contrat);
+        } else {
+            Contrat existing = findById(contrat.getId());
+            if (existing != null) {
+                existing.setDateDebut(contrat.getDateDebut());
+                existing.setDateFin(contrat.getDateFin());
+                existing.setPrixTotal(contrat.getPrixTotal());
+                existing.setEtat(contrat.getEtat());
+            }
         }
     }
 

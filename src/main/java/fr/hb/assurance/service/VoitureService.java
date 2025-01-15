@@ -29,15 +29,22 @@ public class VoitureService {
     }
 
     public void save(Voiture voiture) {
-        Voiture existing = findById(voiture.getId());
-        if (existing != null) {
-            existing.setImmatriculation(voiture.getImmatriculation());
-            existing.setModele(voiture.getModele());
-            existing.setMarque(voiture.getMarque());
-            existing.setCategorie(voiture.getCategorie());
-            existing.setStatut(voiture.getStatut());
-        } else {
+        if (voiture.getId() == 0) {
+            int newId = voitures.stream()
+                    .mapToInt(Voiture::getId)
+                    .max()
+                    .orElse(0) + 1;
+            voiture.setId(newId);
             voitures.add(voiture);
+        } else {
+            Voiture existing = findById(voiture.getId());
+            if (existing != null) {
+                existing.setImmatriculation(voiture.getImmatriculation());
+                existing.setModele(voiture.getModele());
+                existing.setMarque(voiture.getMarque());
+                existing.setCategorie(voiture.getCategorie());
+                existing.setStatut(voiture.getStatut());
+            }
         }
     }
 
