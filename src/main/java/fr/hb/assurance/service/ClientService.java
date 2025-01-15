@@ -12,8 +12,8 @@ public class ClientService {
     private static final List<Client> clients = new ArrayList<>();
 
     static {
-        clients.add(new Client(1, "Dupont", "Jean", "jean.dupont@email.com", "Permis B", "H", false));
-        clients.add(new Client(2, "Martin", "Marie", "marie.martin@email.com", "Permis B", "F", true));
+        clients.add(new Client(1, "SADFLOWER", "Enio", "enio.sadflower@email.com", "Permis B", "H", false));
+        clients.add(new Client(2, "TEST", "TEST", "test.test@email.com", "Permis B", "F", true));
     }
 
     public List<Client> findAll() {
