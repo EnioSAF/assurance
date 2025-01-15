@@ -18,14 +18,25 @@ public class ClientController {
     @GetMapping
     public String listeClients(Model model) {
         model.addAttribute("clients", clientService.findAll());
-        return "clients";
+        return "clients/list";
     }
 
     // Affiche le formulaire d'ajout de client
     @GetMapping("/ajouter")
     public String ajouterClientForm(Model model) {
         model.addAttribute("client", new Client());
-        return "client-form";
+        return "clients/form";
+    }
+
+    // Affiche le formulaire de modification d'un client
+    @GetMapping("/modifier/{id}")
+    public String modifierClientForm(@PathVariable int id, Model model) {
+        Client client = clientService.findById(id);
+        if (client == null) {
+            throw new IllegalArgumentException("Client introuvable avec l'ID : " + id);
+        }
+        model.addAttribute("client", client);
+        return "clients/form";
     }
 
     // Ajoute ou met à jour un client

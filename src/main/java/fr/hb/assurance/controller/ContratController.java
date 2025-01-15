@@ -26,7 +26,7 @@ public class ContratController {
     @GetMapping
     public String listeContrats(Model model) {
         model.addAttribute("contrats", contratService.findAll());
-        return "contrats";
+        return "contrats/list";
     }
 
     // Affiche le formulaire d'ajout de contrat
@@ -35,7 +35,20 @@ public class ContratController {
         model.addAttribute("contrat", new Contrat());
         model.addAttribute("clients", clientService.findAll());
         model.addAttribute("voitures", voitureService.findAll());
-        return "contrat-form";
+        return "contrats/form";
+    }
+
+    // Affiche le formulaire de modification d'un contrat
+    @GetMapping("/modifier/{id}")
+    public String modifierContratForm(@PathVariable int id, Model model) {
+        Contrat contrat = contratService.findById(id); // Méthode pour trouver le contrat par ID
+        if (contrat == null) {
+            throw new IllegalArgumentException("Contrat introuvable avec l'ID : " + id);
+        }
+        model.addAttribute("contrat", contrat);
+        model.addAttribute("clients", clientService.findAll());
+        model.addAttribute("voitures", voitureService.findAll());
+        return "contrats/form"; // Réutilise le formulaire pour l'ajout/modification
     }
 
     // Ajoute ou met à jour un contrat

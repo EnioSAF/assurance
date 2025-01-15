@@ -28,6 +28,17 @@ public class VoitureController {
         return "voitures/form";
     }
 
+    // Affiche le formulaire de modification d'une voiture
+    @GetMapping("/modifier/{id}")
+    public String modifierVoitureForm(@PathVariable int id, Model model) {
+        Voiture voiture = voitureService.findById(id);
+        if (voiture == null) {
+            throw new IllegalArgumentException("Voiture introuvable avec l'ID : " + id);
+        }
+        model.addAttribute("voiture", voiture);
+        return "voitures/form";
+    }
+
     // Ajoute ou met à jour une voiture
     @PostMapping("/sauvegarder")
     public String sauvegarderVoiture(@ModelAttribute Voiture voiture) {
