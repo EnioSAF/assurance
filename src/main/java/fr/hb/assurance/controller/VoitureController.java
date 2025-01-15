@@ -18,14 +18,14 @@ public class VoitureController {
     @GetMapping
     public String listeVoitures(Model model) {
         model.addAttribute("voitures", voitureService.findAll());
-        return "voitures";
+        return "voitures/list";
     }
 
     // Affiche le formulaire d'ajout de voiture
     @GetMapping("/ajouter")
     public String ajouterVoitureForm(Model model) {
         model.addAttribute("voiture", new Voiture());
-        return "voiture-form";
+        return "voitures/form";
     }
 
     // Ajoute ou met à jour une voiture
